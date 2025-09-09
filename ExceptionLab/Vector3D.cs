@@ -53,8 +53,11 @@ namespace ExceptionLab
         public Vector3D GetNormalizedVector()
         {
             double length = this.GetVectorLength();
-
-            UndefinedOrientationException.CheckNullVector(this);
+            
+            if (length == 0)
+            {
+                throw new UndefinedOrientationException("Cannot normalize the zero vector.");
+            }
             
             double x = this.x / length;
             double y = this.y / length;
@@ -64,33 +67,48 @@ namespace ExceptionLab
 
         public string GetLinearCombination()
         {
-            Vector3D vector = this.GetNormalizedVector();
-            return $"({vector.GetX():F2}e1, {vector.GetY():F2}e2, {vector.GetZ():F2}e3)";
+            try
+            {
+                Vector3D vector = this.GetNormalizedVector();
+                return $"({vector.GetX():F2}e1, {vector.GetY():F2}e2, {vector.GetZ():F2}e3)";
+            }
+            catch (UndefinedOrientationException)
+            {
+                throw new UndefinedOrientationException();
+            }
+
         }
 
         public string GetOrientation(Vector3D vector)
         {
-            Vector3D vectorNormalized = this.GetNormalizedVector();
-            Vector3D vectorTwoNormalized = vector.GetNormalizedVector();
-            
-            double dot =  vectorNormalized.GetDot(vectorTwoNormalized);
+            try
+            {
+                Vector3D vectorNormalized = this.GetNormalizedVector();
+                Vector3D vectorTwoNormalized = vector.GetNormalizedVector();
 
-            if (Math.Abs(dot - 1) < 1e-9)
-            {
-                return "Hai vector cung phuong";
+                double dot = vectorNormalized.GetDot(vectorTwoNormalized);
+
+                if (Math.Abs(dot - 1) < 1e-9)
+                {
+                    return "Hai vector cung phuong";
+                }
+                else if (Math.Abs(dot + 1) < 1e-9)
+                {
+                    return "Hai vector nguoc phuong";
+                }
+                else if (Math.Abs(dot) < 1e-9)
+                {
+                    return "Hai vector vuong goc";
+                }
+                else
+                {
+                    double angle = Math.Acos(dot) * 180.0 / Math.PI;
+                    return $"Hai vector tao goc {angle:F2} do voi nhau";
+                }
             }
-            else if (Math.Abs(dot + 1) < 1e-9)
+            catch (UndefinedOrientationException)
             {
-                return "Hai vector nguoc phuong";
-            }
-            else if (Math.Abs(dot) < 1e-9)
-            {
-                return "Hai vector vuong goc";
-            }
-            else
-            {
-                double angle = Math.Acos(dot) * 180.0 / Math.PI;
-                return $"Hai vector tao goc {angle:F2} do voi nhau";
+                throw new UndefinedOrientationException();
             }
         }
 
