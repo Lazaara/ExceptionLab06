@@ -119,7 +119,16 @@ namespace ExceptionLab
             double result = 0;
             double dot = vone.GetDot(vtwo);
             double lenghthprod = vone.GetVectorLength() * vtwo.GetVectorLength();
-            if (lenghthprod == 0) throw new UndefinedOrientationException();
+            try
+            {
+                UndefinedOrientationException.CheckNullVector(vone);
+                UndefinedOrientationException.CheckNullVector(vtwo);
+            }
+            catch (UndefinedOrientationException e)
+            {
+                throw new UndefinedOrientationException();
+            }
+
             double cosTheta = dot / lenghthprod;
             result = Math.Max(-1.0, Math.Min(1.0, cosTheta));
             return result;

@@ -24,6 +24,8 @@ namespace ExceptionLab
                 Console.WriteLine(e);
             }
             
+            Console.WriteLine();
+            
             try
             {
                 Console.WriteLine($"Bieu dien phuong cua vector duoc chuan hoa 1: {vectors[0].GetLinearCombination()}");
@@ -34,6 +36,8 @@ namespace ExceptionLab
                 Console.WriteLine(e);
             }
             
+            Console.WriteLine();
+            
             try
             {
                 Console.WriteLine($"Bieu dien phuong cua vector duoc chuan hoa 4: {vectors[3].GetLinearCombination()}");
@@ -43,6 +47,8 @@ namespace ExceptionLab
                 Console.WriteLine(e);
             }
             
+            Console.WriteLine();
+            
             try
             {
                 Console.WriteLine($"Phuong cua vector 3 va 5: {vectors[2].GetOrientation(vectors[4])}");
@@ -51,6 +57,8 @@ namespace ExceptionLab
             {
                 Console.WriteLine(e);
             }
+            
+            Console.WriteLine();
 
             Vector3D vector = vectors[2] + vectors[3];
             Console.WriteLine($"Ket qua: V({vector.GetX()}, {vector.GetY()}, {vector.GetZ()})");
