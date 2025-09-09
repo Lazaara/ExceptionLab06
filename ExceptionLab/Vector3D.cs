@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
-using System.Web;
 
 namespace ExceptionLab
 {
@@ -56,15 +54,8 @@ namespace ExceptionLab
         {
             double length = this.GetVectorLength();
 
-            try
-            {
-                UndefinedOrientationException.CheckNullVector(this);
-            }
-            catch (UndefinedOrientationException e)
-            {
-                throw new UndefinedOrientationException();
-            }
-
+            UndefinedOrientationException.CheckNullVector(this);
+            
             double x = this.x / length;
             double y = this.y / length;
             double z = this.z / length;
@@ -81,18 +72,7 @@ namespace ExceptionLab
         {
             Vector3D vectorNormalized = this.GetNormalizedVector();
             Vector3D vectorTwoNormalized = vector.GetNormalizedVector();
-
-            try
-            {
-                
-                UndefinedOrientationException.CheckNullVector(vectorNormalized);
-                UndefinedOrientationException.CheckNullVector(vectorTwoNormalized);
-
-            }
-            catch (UndefinedOrientationException e)
-            {
-                throw new UndefinedOrientationException();
-            }
+            
             double dot =  vectorNormalized.GetDot(vectorTwoNormalized);
 
             if (Math.Abs(dot - 1) < 1e-9)
@@ -119,15 +99,9 @@ namespace ExceptionLab
             double result = 0;
             double dot = vone.GetDot(vtwo);
             double lenghthprod = vone.GetVectorLength() * vtwo.GetVectorLength();
-            try
-            {
-                UndefinedOrientationException.CheckNullVector(vone);
-                UndefinedOrientationException.CheckNullVector(vtwo);
-            }
-            catch (UndefinedOrientationException e)
-            {
-                throw new UndefinedOrientationException();
-            }
+            
+            UndefinedOrientationException.CheckNullVector(vone);
+            UndefinedOrientationException.CheckNullVector(vtwo);
 
             double cosTheta = dot / lenghthprod;
             result = Math.Max(-1.0, Math.Min(1.0, cosTheta));
