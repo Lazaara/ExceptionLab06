@@ -26,6 +26,25 @@ namespace ExceptionLab
             
             try
             {
+                Console.WriteLine($"Bieu dien phuong cua vector duoc chuan hoa 1: {vectors[0].GetLinearCombination()}");
+
+            }
+            catch (UndefinedOrientationException e)
+            {
+                Console.WriteLine(e);
+            }
+            
+            try
+            {
+                Console.WriteLine($"Bieu dien phuong cua vector duoc chuan hoa 4: {vectors[3].GetLinearCombination()}");
+            }
+            catch (UndefinedOrientationException e)
+            {
+                Console.WriteLine(e);
+            }
+            
+            try
+            {
                 Console.WriteLine($"Phuong cua vector 3 va 5: {vectors[2].GetOrientation(vectors[4])}");
             }
             catch (UndefinedOrientationException e)

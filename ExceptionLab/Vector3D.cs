@@ -56,7 +56,11 @@ namespace ExceptionLab
         {
             double length = this.GetVectorLength();
 
-            if (length == 0)
+            try
+            {
+                UndefinedOrientationException.CheckNullVector(this);
+            }
+            catch (UndefinedOrientationException e)
             {
                 throw new UndefinedOrientationException();
             }
@@ -67,16 +71,28 @@ namespace ExceptionLab
             return new Vector3D(x, y, z);
         }
 
+        public string GetLinearCombination()
+        {
+            Vector3D vector = this.GetNormalizedVector();
+            return $"({vector.GetX():F2}e1, {vector.GetY():F2}e2, {vector.GetZ():F2}e3)";
+        }
+
         public string GetOrientation(Vector3D vector)
         {
             Vector3D vectorNormalized = this.GetNormalizedVector();
             Vector3D vectorTwoNormalized = vector.GetNormalizedVector();
 
-            if (vectorNormalized.GetVectorLength() == 0 || vectorTwoNormalized.GetVectorLength() == 0)
+            try
+            {
+                
+                UndefinedOrientationException.CheckNullVector(vectorNormalized);
+                UndefinedOrientationException.CheckNullVector(vectorTwoNormalized);
+
+            }
+            catch (UndefinedOrientationException e)
             {
                 throw new UndefinedOrientationException();
             }
-            
             double dot =  vectorNormalized.GetDot(vectorTwoNormalized);
 
             if (Math.Abs(dot - 1) < 1e-9)

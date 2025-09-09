@@ -20,6 +20,14 @@ namespace ExceptionLab
         {
             
         }
+        
+        public static void CheckNullVector(Vector3D v)
+        {
+            if (v == null || v.GetVectorLength() == 0)
+            {
+                throw new UndefinedOrientationException();
+            }
+        }
 
 
     }
